@@ -1,7 +1,11 @@
 
 import './App.css'
 import Button from './components/Button'
+import UList from './components/UList'
+import Form from './components/Form'
 function App() {
+  const list = ['dog','cat','chicken','cow','sheep','horse']
+  const listx = ['dog','cat','chicken','cow','sheep','horsex']
 
   return (
     <>
@@ -25,6 +29,18 @@ function App() {
       <Button 
         id={0}
       />
+      <div className="flex">
+
+        <UList
+          array= {list}
+         />
+         <UList
+          array= {listx}
+         />
+      </div>
+      <div>
+        <Form />
+      </div>
     </>
   )
 }
