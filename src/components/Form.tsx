@@ -1,11 +1,17 @@
+import React, { useState } from "react"
+
 export default function Form(){
-    // function clicked(formData){
-    //     const names =
-    // }
+    function handleSubmit(event:React.FormEvent<HTMLFormElement>){
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const firstName = formData.get("firstName");
+        const lastName = formData.get("lastName");
+        alert(`Hello ${firstName} ${lastName}!`)
+    }
     return(
-        <form  className="flex flex-col gap-2 px-30 pb-3.5 ">
-            <input type="text" className="border-1 active:border-2 p-2 rounded-md" placeholder="First name"/>
-            <input type="text" className="border-1 active:border-2 p-2 rounded-md" placeholder="Last name"/>
+        <form  className="flex flex-col gap-2 px-30 pb-3.5 " onSubmit={handleSubmit}>
+            <input type="text" className="border-1 active:border-2 p-2 rounded-md" placeholder="First name" name="firstName"/>
+            <input type="text" className="border-1 active:border-2 p-2 rounded-md" placeholder="Last name" name="lastName"/>
             <button className="uppercase rounded-xl transition-transform  duration-500 ease-in-out active:translate-y-1 text-white text-2xl font-bold bg-red-600 py-1.5 px-5 shadow-2xl">
                 Greet me</button>
         </form>
