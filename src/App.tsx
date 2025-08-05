@@ -3,16 +3,29 @@ import './App.css'
 import Button from './components/Button'
 import UList from './components/UList'
 import Form from './components/Form'
+import Joke from './components/Joke'
+import jokes from './jokes'
+interface JokeInterface {
+  id:number;
+  setup:string;
+  punchline:string
+}
 function App() {
   const list = ['dog','cat','chicken','cow','sheep','horse']
   const listx = ['dog','cat','chicken','cow','sheep','horsex']
-
+  const jokesData  = jokes.map((joke:JokeInterface)=>{
+    return(
+      <Joke
+          key={joke.id}
+          setup={joke.setup}
+          punchline={joke.punchline}/>
+    )
+  })
   return (
     <>
     <div className='flex justify-center gap-5'>
       <div className='flex w-[400px] h-[400px] mt-30  bg-amber-400 text-black justify-center items-center '>
-          <p className=''>Hello, World!</p>
-           
+          <p className=''>Hello, World!</p>    
       </div>
       </div>
       <div>
@@ -40,6 +53,9 @@ function App() {
       </div>
       <div>
         <Form />
+      </div>
+      <div className='flex w-auto h-auto m-3 border-1 rounded-lg bg-green-700'>
+        {jokesData}
       </div>
     </>
   )
