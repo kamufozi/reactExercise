@@ -14,35 +14,30 @@ interface JokeInterface {
   punchline:string
 }
 function App() {
-  const [pokemonsWithImages,setPokemons]=useState(null)
-useEffect(() => {
-  const fetchPokemons = async () => {
-    try {
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=10');
-      const data = await response.json();
-      
-      const detailedPromises = data.results.map(pokemon => 
-        fetch(pokemon.url).then(res => res.json())
-      );
-      const detailedPokemons = await Promise.all(detailedPromises);
-      
-      const pokemonsWithImages = detailedPokemons.map(p => ({
-        name: p.name,
-        image: p.sprites.front_default
-      }));
-      
-      setPokemons(pokemonsWithImages);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching Pokemon:', error);
-      setLoading(false);
-    }
-  };
-  
-  fetchPokemons();
-}, []);
+  const [pokemonDetails,setPokemonDetails]=useState<any>(null);
+  useEffect(
+    ()=>{
+      fetch('https://pokeapi.co/api/v2/pokemon?limit=10&offset=0')
+       .then(res=>res.json())
+       .then(async (data)=>{
+        const details =await Promise.all(data.results.map((item:any)=>
+          fetch(item.url)
+          .then(res=>res.json())
+          .then(pokemon=>({
+            name:pokemon.name,
+            image:pokemon.sprites.front_default
+          }))
+          ))
+          setPokemonDetails(details)
 
+      })
 
+    },[]
+  )
+ 
+  console.log(pokemonDetails);
+
+  // const img = pokemon.sprites.front_default;
   const list = ['dog','cat','chicken','cow','sheep','horse']
   const listx = ['dog','cat','chicken','cow','sheep','horsex']
   const jokesData  = jokes.map((joke:JokeInterface)=>{
@@ -90,11 +85,11 @@ useEffect(() => {
       <div className='flex w-auto h-auto m-3 border-1 rounded-lg bg-green-700'>
         {jokesData}
       </div>
-      <div>
-      <button onClick={()=>random()} className=" rounded-xl transition-transform  duration-500 ease-in-out active:translate-y-1 text-white text-2xl font-bold bg-red-600 py-1.5 px-5 shadow-2xl">
+      <div className='flex flex-col gap-2 px-30 pb-3.5 '>
+      <button  className=" rounded-xl transition-transform  duration-500 ease-in-out active:translate-y-1 text-white text-2xl font-bold bg-red-600 py-1.5 px-5 shadow-2xl">
     Fetch Random</button>
        <div className='flex w-auto h-auto m-3 border-1 rounded-lg bg-green-300'>
-        
+        {/* <img src= {pokemon.sprites.front_default} alt="" /> */}
         </div>
       </div>
     </>
