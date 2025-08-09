@@ -1,7 +1,7 @@
-import React from "react"
+
 
 export default function Form(){
-    function submit(formData){
+    function submit(formData:FormData){
         const firstName = formData.get("firstName");
         const lastName = formData.get("lastName");
         alert(`Hello ${firstName} ${lastName}!`)
