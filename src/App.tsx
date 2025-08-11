@@ -13,6 +13,10 @@ interface JokeInterface {
   setup:string;
   punchline:string
 }
+interface pokeProps{
+  image:string,
+  name:string
+}
 function App() {
   const [pokemonDetails,setPokemonDetails]=useState<any>(null);
   useEffect(
@@ -46,6 +50,15 @@ function App() {
           key={joke.id}
           setup={joke.setup}
           punchline={joke.punchline}/>
+    )
+  })
+  const pokemonCards = pokemonDetails.map((pokemon:pokeProps)=>{
+    return(
+      <Card
+         image={pokemon.image}
+         name={pokemon.name} 
+        />
+
     )
   })
 
@@ -88,8 +101,8 @@ function App() {
       <div className='flex flex-col gap-2 px-30 pb-3.5 '>
       <button  className=" rounded-xl transition-transform  duration-500 ease-in-out active:translate-y-1 text-white text-2xl font-bold bg-red-600 py-1.5 px-5 shadow-2xl">
     Fetch Random</button>
-       <div className='flex w-auto h-auto m-3 border-1 rounded-lg bg-green-300'>
-        {/* <img src= {pokemon.sprites.front_default} alt="" /> */}
+       <div className='grid grid-cols-2 gap-2 pb-3.5 bg-green-300 items-center'>
+         {pokemonCards}
         </div>
       </div>
     </>
